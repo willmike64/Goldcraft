@@ -1,0 +1,2 @@
+# Goldcraft
+Simple game
