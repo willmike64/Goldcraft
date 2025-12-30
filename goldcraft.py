@@ -28,8 +28,10 @@ class Planet:
 class Ship:
     """Represents the player's ship."""
     
+    MAX_FUEL = 100
+    
     def __init__(self):
-        self.fuel = 100
+        self.fuel = self.MAX_FUEL
         self.cargo_capacity = 50
         self.cargo: Dict[str, int] = {"gold": 0, "iron": 0, "crystals": 0}
         self.credits = 100
@@ -175,7 +177,7 @@ class Game:
             success, message = self.star_system.travel_to_planet(planet_index, self.ship)
             print(f"\n{message}")
             
-        except (ValueError, IndexError):
+        except ValueError:
             print("Invalid input!")
     
     def view_system(self):
@@ -218,8 +220,7 @@ class Game:
     def refuel(self):
         """Refuel the ship."""
         fuel_price = 1  # 1 credit per fuel unit
-        max_fuel = 100
-        needed_fuel = max_fuel - self.ship.fuel
+        needed_fuel = Ship.MAX_FUEL - self.ship.fuel
         
         if needed_fuel == 0:
             print("\nFuel tank is already full!")
@@ -246,7 +247,7 @@ class Game:
             choice = input("Refuel to full? (y/n): ")
             
             if choice.lower() == 'y':
-                self.ship.fuel = max_fuel
+                self.ship.fuel = Ship.MAX_FUEL
                 self.ship.credits -= cost
                 print(f"Refueled to full. Current fuel: {self.ship.fuel}")
     
